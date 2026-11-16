@@ -20,7 +20,6 @@ import { NoteEditor } from './components/NoteEditor';
 import { AiAssistant } from './components/AiAssistant';
 import { AuthModal } from './components/AuthModal';
 import { SettingsModal } from './components/SettingsModal';
-import { DeployModal } from './components/DeployModal';
 
 export const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -32,7 +31,6 @@ export const App: React.FC = () => {
   // Modals & Panels
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isDeployOpen, setIsDeployOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   
   // Stats & Status
@@ -214,7 +212,6 @@ export const App: React.FC = () => {
         setSearchQuery={setSearchQuery}
         onNewNote={handleCreateNewNote}
         onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenDeploy={() => setIsDeployOpen(true)}
         onLogout={handleLogout}
         aiStatus={aiStatus}
       />
@@ -336,11 +333,6 @@ export const App: React.FC = () => {
         onClose={() => setIsSettingsOpen(false)}
         aiStatus={aiStatus}
         onKeyUpdated={checkAiStatus}
-      />
-
-      <DeployModal
-        isOpen={isDeployOpen}
-        onClose={() => setIsDeployOpen(false)}
       />
     </div>
   );
