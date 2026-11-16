@@ -55,11 +55,24 @@ const activeDist = fs.existsSync(clientBuildPath)
 if (activeDist) {
   console.log(`Serving static production build from: ${activeDist}`);
   app.use(express.static(activeDist));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(activeDist, 'index.html'));
+  
+  // Express 5 compatible SPA catch-all
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ error: `Endpoint ${req.method} ${req.path} not found` });
+    }
+    const indexPath = path.join(activeDist, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      next();
+    }
   });
 } else {
-  app.get('/', (req, res) => {
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ error: `Endpoint ${req.method} ${req.path} not found` });
+    }
     res.send(`
       <!DOCTYPE html>
       <html>
@@ -84,10 +97,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start listening
-app.listen(PORT, () => {
+// Start listening explicitly on 0.0.0.0
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`=========================================`);
-  console.log(`✨ MindFlow AI Server running on http://localhost:${PORT}`);
-  console.log(`📊 Health Check: http://localhost:${PORT}/api/health`);
+  console.log(`✨ MindFlow AI Server running on http://127.0.0.1:${PORT}`);
+  console.log(`📊 Health Check: http://127.0.0.1:${PORT}/api/health`);
   console.log(`=========================================`);
 });
