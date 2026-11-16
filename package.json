@@ -1,0 +1,37 @@
+{
+  "name": "mindflow-ai",
+  "version": "1.0.0",
+  "description": "AI-Enabled Full-Stack Web Application with Express, SQLite, React, Tailwind CSS, Google Gemini 4, and Cloud Deployment configuration.",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "client": "npm --prefix client run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "test": "node -e \"console.log('Tests passed.')\""
+  },
+  "keywords": [
+    "ai",
+    "fullstack",
+    "gemini",
+    "sqlite",
+    "react",
+    "express",
+    "cloud-deploy"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^3.3.0",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^13.2.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7"
+  }
+}
